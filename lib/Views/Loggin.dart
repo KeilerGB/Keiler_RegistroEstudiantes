@@ -117,17 +117,19 @@ void mostrarAviso(BuildContext context, String info) {
           actions: [
             //----------------------------------
             //Buton OK para salir del AlertDialog
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                  primary: const Color.fromARGB(255, 10, 33, 41),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                  textStyle: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold)),
-              child: const Text('Entendido'),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: const Color.fromARGB(255, 10, 33, 41),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 15),
+                    textStyle: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.bold)),
+                child: const Text('Entendido'),
+              ),
             ),
             //----------------------------------
           ],

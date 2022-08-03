@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studentregistration/Views/Loggin.dart';
+import 'package:studentregistration/Views/Students.dart';
 
 void main() => runApp(const MyApp());
 
@@ -12,7 +13,8 @@ class MyApp extends StatelessWidget {
       title: 'REGISTRO ESTUDIANTES',
       initialRoute: "Loggin",
       routes: {
-        "Loggin": (BuildContext context) => Loggin(),
+        "Loggin": (context) => Loggin(),
+        "ViewStudents": (context) => const Students(),
       },
     );
   }
