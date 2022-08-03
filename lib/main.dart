@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'REGISTRO ESTUDIANTES',
       initialRoute: "Loggin",
       routes: {
-        "Loggin": (BuildContext context) => const Loggin(),
+        "Loggin": (BuildContext context) => Loggin(),
       },
     );
   }
