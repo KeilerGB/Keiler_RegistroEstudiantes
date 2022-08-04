@@ -1,17 +1,26 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, must_be_immutable
 
 import 'package:flutter/material.dart';
 
-class Students extends StatefulWidget {
-  const Students({Key? key}) : super(key: key);
+class Students extends StatelessWidget {
+  Students({Key? key}) : super(key: key);
 
-  @override
-  State<Students> createState() => _StudentsState();
-}
+  String dato = "holga";
 
-class _StudentsState extends State<Students> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    if (dato == "hola") {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("Caso1"),
+        ),
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("Caso2"),
+        ),
+      );
+    }
   }
 }

@@ -85,9 +85,10 @@ class Loggin extends StatelessWidget {
   }
 
   void validar(BuildContext context) {
-    if (txtUser.text == "UsuarioBD") {
-      if (txtPassword.text == "ContraseñaBD") {
+    if (txtUser.text == "1") {
+      if (txtPassword.text == "1") {
         //Codigo en caso que el loggin sea exitoso
+        Navigator.popAndPushNamed(context, "ViewStudents");
       } else {
         mostrarAviso(
             context, "Usuario y contraseña incorrectos, favor reintente");
