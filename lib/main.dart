@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studentregistration/Views/Loggin.dart';
-import 'package:studentregistration/Views/Students.dart';
+import 'package:studentregistration/Views/StudentsList.dart';
 
 void main() => runApp(const MyApp());
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "Loggin",
       routes: {
         "Loggin": (context) => Loggin(),
-        "ViewStudents": (context) => Students(),
+        "ViewStudents": (context) => const Students(),
       },
     );
   }

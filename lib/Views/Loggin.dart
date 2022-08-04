@@ -88,6 +88,8 @@ class Loggin extends StatelessWidget {
     if (txtUser.text == "1") {
       if (txtPassword.text == "1") {
         //Codigo en caso que el loggin sea exitoso
+        txtUser.text = "";
+        txtPassword.text = "";
         Navigator.popAndPushNamed(context, "ViewStudents");
       } else {
         mostrarAviso(
