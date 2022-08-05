@@ -29,7 +29,7 @@ class _StudentsState extends State<Students> {
   }
 
   Widget bodyHome() {
-    String dato = "holad";
+    String dato = "hola";
     if (dato == "hola") {
       return Scaffold(
         backgroundColor: const Color.fromARGB(255, 10, 33, 41),
