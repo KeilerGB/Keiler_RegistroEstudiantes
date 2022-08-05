@@ -20,11 +20,6 @@
           "type": 9
         },
         {
-          "id": "3:7260937482832547074",
-          "name": "lastname",
-          "type": 9
-        },
-        {
           "id": "4:2375479209113812605",
           "name": "age",
           "type": 6
@@ -56,7 +51,9 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    7260937482832547074
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

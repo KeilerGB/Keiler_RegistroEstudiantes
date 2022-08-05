@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "Loggin",
       routes: {
         "Loggin": (context) => Loggin(),
-        "ViewStudents": (context) => const Students(),
+        "ViewStudents": (context) => StudentView(),
       },
     );
   }

@@ -5,14 +5,12 @@ import 'package:objectbox/objectbox.dart';
 class Students {
   int id = 0;
   String name;
-  String lastname;
   int age;
   String dateofbirth;
   String hobbits;
   String descriptions;
   Students({
     required this.name,
-    required this.lastname,
     required this.age,
     required this.dateofbirth,
     required this.hobbits,

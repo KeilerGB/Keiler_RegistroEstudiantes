@@ -35,11 +35,6 @@ final _entities = <ModelEntity>[
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 7260937482832547074),
-            name: 'lastname',
-            type: 9,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(4, 2375479209113812605),
             name: 'age',
             type: 6,
@@ -90,7 +85,7 @@ ModelDefinition getObjectBoxModel() {
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredPropertyUids: const [7260937482832547074],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -107,14 +102,12 @@ ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (Students object, fb.Builder fbb) {
           final nameOffset = fbb.writeString(object.name);
-          final lastnameOffset = fbb.writeString(object.lastname);
           final dateofbirthOffset = fbb.writeString(object.dateofbirth);
           final hobbitsOffset = fbb.writeString(object.hobbits);
           final descriptionsOffset = fbb.writeString(object.descriptions);
           fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nameOffset);
-          fbb.addOffset(2, lastnameOffset);
           fbb.addInt64(3, object.age);
           fbb.addOffset(4, dateofbirthOffset);
           fbb.addOffset(5, hobbitsOffset);
@@ -129,8 +122,6 @@ ModelDefinition getObjectBoxModel() {
           final object = Students(
               name: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
-              lastname: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''),
               age: const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0),
               dateofbirth: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 12, ''),
@@ -155,22 +146,18 @@ class Students_ {
   /// see [Students.name]
   static final name = QueryStringProperty<Students>(_entities[0].properties[1]);
 
-  /// see [Students.lastname]
-  static final lastname =
-      QueryStringProperty<Students>(_entities[0].properties[2]);
-
   /// see [Students.age]
-  static final age = QueryIntegerProperty<Students>(_entities[0].properties[3]);
+  static final age = QueryIntegerProperty<Students>(_entities[0].properties[2]);
 
   /// see [Students.dateofbirth]
   static final dateofbirth =
-      QueryStringProperty<Students>(_entities[0].properties[4]);
+      QueryStringProperty<Students>(_entities[0].properties[3]);
 
   /// see [Students.hobbits]
   static final hobbits =
-      QueryStringProperty<Students>(_entities[0].properties[5]);
+      QueryStringProperty<Students>(_entities[0].properties[4]);
 
   /// see [Students.descriptions]
   static final descriptions =
-      QueryStringProperty<Students>(_entities[0].properties[6]);
+      QueryStringProperty<Students>(_entities[0].properties[5]);
 }
