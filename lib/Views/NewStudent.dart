@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:studentregistration/Models/BD.dart';
+import 'package:date_field/date_field.dart';
+import 'package:intl/intl.dart';
 
 class AddStudentScreen extends StatefulWidget {
   const AddStudentScreen({Key? key}) : super(key: key);
@@ -10,132 +12,135 @@ class AddStudentScreen extends StatefulWidget {
 
 class _AddStudentScreenState extends State<AddStudentScreen> {
   final namecontroller = TextEditingController();
-  final lastnamecontroller = TextEditingController();
   final agecontroller = TextEditingController();
   final dateofbirthcontroller = TextEditingController();
   final hobbitscontroller = TextEditingController();
   final descriptioncontroller = TextEditingController();
 
-  void onSave() {
-    final name = namecontroller.text.trim();
-    final lastname = lastnamecontroller.text.trim();
-    final age = agecontroller.text.trim();
-    final dateofbirth = dateofbirthcontroller.text.trim();
-    final hobbits = hobbitscontroller.text.trim();
-    final description = descriptioncontroller.text.trim();
+  final llaveform = GlobalKey<FormState>();
 
-    // final result = Students(
-    //     name: name,
-    //     lastname: lastname,
-    //     age: int.parse(age),
-    //     dateofbirth: dateofbirth,
-    //     hobbits: hobbits,
-    //     descriptions: description);
-
+  void onSave(
+      String name, int age, String datebirth, String hobbit, String descrip) {
     final result = Students(
         name: name,
-        age: int.parse(age),
-        dateofbirth: "",
-        hobbits: "",
-        descriptions: "");
+        age: age,
+        dateofbirth: datebirth,
+        hobbits: hobbit,
+        descriptions: descrip);
     Navigator.of(context).pop(result);
+  }
+
+  void Validar(BuildContext context) {
+    if (llaveform.currentState!.validate()) {
+      llaveform.currentState!.save();
+      //------------------------------------------------------
+      onSave(
+          namecontroller.text,
+          int.parse(agecontroller.text),
+          dateofbirthcontroller.text,
+          hobbitscontroller.text,
+          descriptioncontroller.text);
+      //------------------------------------------------------
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 10, 33, 41),
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Container(
-          child: ListView(
-            children: [
-              CreateFormularios(namecontroller, TextInputType.text, "Nombre"),
-              CreateFormularios(
-                  lastnamecontroller, TextInputType.text, "Apellidos"),
-              CreateFormularios(agecontroller, TextInputType.number, "Edad"),
-              CreateFormularios(dateofbirthcontroller, TextInputType.text,
-                  "Fecha Nacimiento"),
-              CreateFormularios(
-                  hobbitscontroller, TextInputType.text, "Pasatiempos"),
-              CreateFormularios(
-                  descriptioncontroller, TextInputType.text, "Descripción"),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: const Color.fromARGB(255, 19, 49, 60),
-                  ),
-                  onPressed: onSave,
-                  child: const Text("Agregar"))
-            ],
+        backgroundColor: const Color.fromARGB(255, 10, 33, 41),
+        body: Center(
+          child: Form(
+            key: llaveform,
+            child: SingleChildScrollView(
+                child: Column(
+              children: [
+                TextForm(namecontroller, TextInputType.text, "Nombre", 1),
+                TextForm(agecontroller, TextInputType.number, "Edad", 1),
+                DateForm(dateofbirthcontroller, "Fecha Nacimiento"),
+                TextForm(
+                    hobbitscontroller, TextInputType.text, "Pasatiempos", 2),
+                TextForm(descriptioncontroller, TextInputType.text,
+                    "Descripción", 2),
+                Boton(),
+              ],
+            )),
           ),
+        ));
+  }
+
+  Widget TextForm(
+    TextEditingController controller,
+    TextInputType tipo,
+    String texto,
+    int numlines,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      child: TextFormField(
+        controller: controller,
+        textAlign: TextAlign.center,
+        maxLines: numlines,
+        style:
+            const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        keyboardType: tipo,
+        decoration: InputDecoration(
+          labelStyle: const TextStyle(color: Colors.white),
+          labelText: texto,
+          border: UnderlineInputBorder(),
         ),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Ingrese un dato';
+          }
+        },
       ),
-      // content: SizedBox(
-      //   height: MediaQuery.of(context).size.height / 1.5,
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: [
-      //       CreateFormularios(namecontroller, TextInputType.text, "Nombre"),
-      //       const SizedBox(height: 10),
-      //       CreateFormularios(
-      //           lastnamecontroller, TextInputType.text, "Apellidos"),
-      //       const SizedBox(height: 10),
-      //       CreateFormularios(agecontroller, TextInputType.number, "Edad"),
-      //       const SizedBox(height: 10),
-      //       CreateFormularios(
-      //           dateofbirthcontroller, TextInputType.text, "Fecha Nacimiento"),
-      //       const SizedBox(height: 10),
-      //       CreateFormularios(
-      //           hobbitscontroller, TextInputType.text, "Pasatiempos"),
-      //       const SizedBox(height: 10),
-      //       CreateFormularios(
-      //           descriptioncontroller, TextInputType.text, "Descripción"),
-      //       const SizedBox(height: 10),
-      //       ElevatedButton(
-      //           style: ElevatedButton.styleFrom(
-      //             primary: const Color.fromARGB(255, 19, 49, 60),
-      //           ),
-      //           onPressed: onSave,
-      //           child: const Text("Agregar"))
-      //     ],
-      //   ),
-      // ),
     );
   }
 
-  Widget CreateFormularios(
-      TextEditingController controller, TextInputType tipo, String texto) {
-    // return TextFormField(
-    //   style: const TextStyle(color: Colors.white),
-    //   textAlign: TextAlign.center,
-    //   controller: controller,
-    //   keyboardType: tipo,
-    //   decoration: InputDecoration(
-    //       labelStyle: const TextStyle(color: Colors.white),
-    //       labelText: texto,
-    //       enabledBorder: OutlineInputBorder(
-    //         borderSide: const BorderSide(
-    //             width: 3, color: Color.fromARGB(255, 19, 49, 60)),
-    //         borderRadius: BorderRadius.circular(20),
-    //       ),
-    //       focusedBorder: OutlineInputBorder(
-    //         borderSide: const BorderSide(width: 3, color: Colors.white),
-    //         borderRadius: BorderRadius.circular(20),
-    //       )),
-    // );
-    return TextField(
-      controller: controller,
-      textAlign: TextAlign.center,
-      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-      keyboardType: tipo,
-      decoration: InputDecoration(
-        labelStyle: const TextStyle(color: Colors.white),
-        labelText: texto,
-        // hintStyle: TextStyle(fontSize: 14, color: Colors.white),
-        // hintText: texto,
-        border: UnderlineInputBorder(),
+  Widget DateForm(
+    TextEditingController controller,
+    String texto,
+  ) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 50),
+      child: TextFormField(
+        controller: controller,
+        textAlign: TextAlign.center,
+        style:
+            const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        keyboardType: TextInputType.datetime,
+        onTap: () {
+          showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1700),
+                  lastDate: DateTime(2050))
+              .then((pickedDate) {
+            controller.text = DateFormat("dd-MM-yyyy").format(pickedDate!);
+          });
+        },
+        decoration: InputDecoration(
+          labelStyle: const TextStyle(color: Colors.white),
+          labelText: texto,
+          border: UnderlineInputBorder(),
+        ),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Ingrese un dato';
+          }
+        },
       ),
     );
+  }
+
+  Widget Boton() {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: const Color.fromARGB(255, 19, 49, 60),
+        ),
+        onPressed: () {
+          Validar(context);
+        },
+        child: const Text("Agregar"));
   }
 }
