@@ -75,6 +75,8 @@ class _LogginState extends State<Loggin> {
                 margin: const EdgeInsets.fromLTRB(50, 0, 50, 0),
                 child: Column(
                   children: [
+                    Image.asset('assets/Loggin.png'),
+                    const SizedBox(height: 20),
                     //---------------Divición---------------
                     _formsCreator(
                         txtUser, TextInputType.emailAddress, false, "Usuario"),

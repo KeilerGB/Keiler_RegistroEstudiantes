@@ -76,7 +76,7 @@ class _StudentViewState extends State<StudentView> {
                 "No hay ningun estudiante registrado",
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold),
               ),
             )
