@@ -17,3 +17,15 @@ class Students {
     required this.descriptions,
   });
 }
+
+@Entity()
+class Login {
+  int id = 0;
+  String User;
+  String Password;
+  Login({
+    this.id = 0,
+    required this.User,
+    required this.Password,
+  });
+}

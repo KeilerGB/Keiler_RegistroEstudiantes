@@ -1,14 +1,60 @@
 // ignore_for_file: file_names, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:studentregistration/Models/BD.dart';
+import 'package:studentregistration/objectbox.g.dart';
 
-class Loggin extends StatelessWidget {
+class Loggin extends StatefulWidget {
   Loggin({Key? key}) : super(key: key);
 
+  @override
+  State<Loggin> createState() => _LogginState();
+}
+
+class _LogginState extends State<Loggin> {
+  final Loginlist = <Login>[];
+
+  late final Store store;
+
+  late final Box<Login> LoginBox;
+
   TextEditingController txtUser = TextEditingController();
+
   TextEditingController txtPassword = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey();
+
+  Future<void> loadStore() async {
+    store = await openStore();
+    LoginBox = store.box<Login>();
+    nuevoadmin();
+    loadStudents();
+  }
+
+  void nuevoadmin() {
+    if (Loginlist.isEmpty) {
+      var result =
+          Login(User: "keiler.cortes@grupobabel.com", Password: "12345");
+      LoginBox.put(result);
+      result = Login(User: "andres.diaz@grupobabel.com", Password: "12345");
+      LoginBox.put(result);
+      result = Login(User: "hugo.chinchilla@grupobabel.com", Password: "12345");
+      LoginBox.put(result);
+    }
+  }
+
+  void loadStudents() {
+    Loginlist.clear();
+    setState(() {
+      Loginlist.addAll(LoginBox.getAll());
+    });
+  }
+
+  @override
+  void initState() {
+    loadStore();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,11 +131,12 @@ class Loggin extends StatelessWidget {
   }
 
   void validar(BuildContext context) {
-    if (txtUser.text == "1") {
-      if (txtPassword.text == "1") {
+    if (valiuser()) {
+      if (valipassword()) {
         //Codigo en caso que el loggin sea exitoso
         txtUser.text = "";
         txtPassword.text = "";
+        store.close();
         Navigator.popAndPushNamed(context, "ViewStudents");
       } else {
         mostrarAviso(
@@ -99,6 +146,28 @@ class Loggin extends StatelessWidget {
       mostrarAviso(
           context, "Usuario y contraseña incorrectos, favor reintente");
     }
+    // txtUser.text = "";
+    // txtPassword.text = "";
+    // store.close();
+    // Navigator.popAndPushNamed(context, "ViewStudents");
+  }
+
+  bool valiuser() {
+    for (var i = 0; i < Loginlist.length; i++) {
+      if (txtUser.text == Loginlist[i].User) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool valipassword() {
+    for (var i = 0; i < Loginlist.length; i++) {
+      if (txtPassword.text == Loginlist[i].Password) {
+        return true;
+      }
+    }
+    return false;
   }
 }
 

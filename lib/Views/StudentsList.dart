@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:studentregistration/Models/BD.dart';
 import 'package:studentregistration/Views/NewStudent.dart';
+import 'package:studentregistration/Views/StudentsInfo.dart';
 import 'package:studentregistration/objectbox.g.dart';
 
 class StudentView extends StatefulWidget {
@@ -45,11 +46,13 @@ class _StudentViewState extends State<StudentView> {
     }
   }
 
-  void ondelete(int id) {
-    studentBox.remove(id);
-    setState(() {
-      loadStudents();
-    });
+  Future<void> verInfo(Students estudiante) async {
+    await Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => studeninf(
+              boxstudent: studentBox,
+              estudiante: estudiante,
+            )));
+    loadStudents();
   }
 
   @override
@@ -93,7 +96,7 @@ class _StudentViewState extends State<StudentView> {
                           color: Colors.white,
                         ),
                         onTap: () {
-                          ondelete(studentlist[i].id);
+                          verInfo(studentlist[i]);
                         },
                       );
                     },

@@ -56,6 +56,30 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(2, 7303514288687312156),
+      name: 'Login',
+      lastPropertyId: const IdUid(3, 523674829231450897),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 8792316115837774405),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 987969799098317153),
+            name: 'User',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 523674829231450897),
+            name: 'Password',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -79,7 +103,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(1, 7053869899012760236),
+      lastEntityId: const IdUid(2, 7303514288687312156),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -132,6 +156,37 @@ ModelDefinition getObjectBoxModel() {
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
+        }),
+    Login: EntityDefinition<Login>(
+        model: _entities[1],
+        toOneRelations: (Login object) => [],
+        toManyRelations: (Login object) => {},
+        getId: (Login object) => object.id,
+        setId: (Login object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Login object, fb.Builder fbb) {
+          final UserOffset = fbb.writeString(object.User);
+          final PasswordOffset = fbb.writeString(object.Password);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, UserOffset);
+          fbb.addOffset(2, PasswordOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Login(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              User: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              Password: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''));
+
+          return object;
         })
   };
 
@@ -160,4 +215,17 @@ class Students_ {
   /// see [Students.descriptions]
   static final descriptions =
       QueryStringProperty<Students>(_entities[0].properties[5]);
+}
+
+/// [Login] entity fields to define ObjectBox queries.
+class Login_ {
+  /// see [Login.id]
+  static final id = QueryIntegerProperty<Login>(_entities[1].properties[0]);
+
+  /// see [Login.User]
+  static final User = QueryStringProperty<Login>(_entities[1].properties[1]);
+
+  /// see [Login.Password]
+  static final Password =
+      QueryStringProperty<Login>(_entities[1].properties[2]);
 }
